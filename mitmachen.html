@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>IGT Mitmachen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <div><strong>IGT</strong></div>
+    <div>
+      <a href="index.html">Start</a>
+      <a href="infos.html">Infos</a>
+      <a href="mitmachen.html">Mitmachen</a>
+      <a href="mitglieder.html">Mitglieder</a>
+    </div>
+  </nav>
+  <main>
+    <h1>Mitmachen</h1>
+    <form id="contactForm" onsubmit="event.preventDefault(); sendContact();">
+      <label>Name:<br><input type="text" id="contactName"></label><br>
+      <label>Nachricht:<br><textarea id="contactMessage"></textarea></label><br>
+      <button type="submit">Kontakt senden</button>
+    </form>
+    <br>
+    <form id="newsletterForm" onsubmit="event.preventDefault(); sendNewsletter();">
+      <label>E-Mail:<br><input type="email" id="newsletterEmail"></label><br>
+      <button type="submit">Newsletter abonnieren</button>
+    </form>
+  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    const firebaseConfig = {{
+      apiKey: "AIzaSyBF9HPU2GyeH4_GFdFono3Xzt8z3jx7aF4",
+      authDomain: "igt-projekt.firebaseapp.com",
+      databaseURL: "https://igt-projekt-default-rtdb.firebaseio.com",
+      projectId: "igt-projekt",
+      storageBucket: "igt-projekt.firebasestorage.app",
+      messagingSenderId: "306935324581",
+      appId: "1:306935324581:web:df219ae43cf6f506a5124c"
+    }};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.sendContact = () => {{
+      const name = document.getElementById("contactName").value.trim();
+      const message = document.getElementById("contactMessage").value.trim();
+      if (name && message) {{
+        push(ref(db, "contact"), {{ name, message }});
+        alert("Gesendet!");
+      }}
+    }};
+
+    window.sendNewsletter = () => {{
+      const email = document.getElementById("newsletterEmail").value.trim();
+      if (email) {{
+        push(ref(db, "newsletter"), {{ email }});
+        alert("E-Mail gespeichert!");
+      }}
+    }};
+  </script>
+</body>
+</html>

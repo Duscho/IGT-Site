@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>IGT Infos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <div><strong>IGT</strong></div>
+    <div>
+      <a href="index.html">Start</a>
+      <a href="infos.html">Infos</a>
+      <a href="mitmachen.html">Mitmachen</a>
+      <a href="mitglieder.html">Mitglieder</a>
+    </div>
+  </nav>
+  <main>
+    <h1>Live-Informationen</h1>
+    <h3>Wikipedia-Suche</h3>
+    <input type="text" id="wikiSearch" placeholder="z. B. Demokratie"><button onclick="searchWiki()">Suchen</button>
+    <p id="wikiInfo">Wikipedia-Inhalt wird geladen...</p>
+
+    <h3>News-Suche</h3>
+    <input type="text" id="newsSearch" placeholder="z. B. Fake News"><button onclick="searchNews()">Suchen</button>
+    <ul id="newsList">Nachrichten werden geladen...</ul>
+  </main>
+  <script>
+    function searchWiki() {{
+      const q = document.getElementById("wikiSearch").value.trim();
+      if (!q) return;
+      fetch(`https://de.wikipedia.org/api/rest_v1/page/summary/${{encodeURIComponent(q)}}`)
+        .then(r => r.json())
+        .then(d => document.getElementById("wikiInfo").textContent = d.extract || "Keine Info.")
+        .catch(() => document.getElementById("wikiInfo").textContent = "Fehler beim Laden.");
+    }}
+
+    function searchNews() {{
+      const q = document.getElementById("newsSearch").value.trim();
+      if (!q) return;
+      fetch(`https://newsapi.org/v2/everything?q=${{encodeURIComponent(q)}}&language=de&apiKey=4a54ca3c13094f3985fce7b1ee55c46b`)
+        .then(r => r.json())
+        .then(d => {{
+          const list = document.getElementById("newsList");
+          list.innerHTML = "";
+          d.articles.slice(0, 5).forEach(a => {{
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${{a.url}}" target="_blank">${{a.title}}</a> <small>(${{a.source.name}})</small>`;
+            list.appendChild(li);
+          }});
+        }})
+        .catch(() => document.getElementById("newsList").textContent = "Fehler beim Laden.");
+    }}
+  </script>
+</body>
+</html>

@@ -14,13 +14,72 @@
       <a href="infos.html">Infos</a>
       <a href="mitmachen.html">Mitmachen</a>
       <a href="mitglieder.html">Mitglieder</a>
+      <a href="downloads.html">Downloads</a>
+      <span class="toggle-dark" onclick="toggleDarkMode()">🌓</span>
     </div>
   </nav>
   <main>
-    <div class="fade-in">
+    <section class="fade-in">
       <h1>Willkommen bei IGT</h1>
-      <p>Unsere Vision: Wahrheit, Freiheit, Transparenz und eine informierte Gesellschaft.</p>
+      <p>Wahrheit, Freiheit, Aufklärung.</p>
+    </section>
+    <section>
+      <h2>Zitat der Wahrheit</h2>
+      <div id="zitatBox" class="fade-in" style="font-style:italic; padding:1rem 0;"></div>
+    </section>
+    
+<section>
+  <h2>Fake vs. Fakt</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front"><strong>❌ Fake:</strong><br>„Impfen verändert deine DNA.“</div>
+        <div class="flip-box-back"><strong>✅ Fakt:</strong><br>Impfstoffe wirken außerhalb des Zellkerns. Keine DNA-Veränderung.</div>
+      </div>
     </div>
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front"><strong>❌ Fake:</strong><br>„Die Medien sagen dir nie die Wahrheit.“</div>
+        <div class="flip-box-back"><strong>✅ Fakt:</strong><br>Viele Medien arbeiten faktenbasiert – prüfe Quellen, nicht Parolen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
   </main>
+  
+<script>
+  const zitate = [
+    "„Wer die Wahrheit nicht kennt, ist ein Dummkopf. Wer sie kennt und eine Lüge nennt, ist ein Verbrecher.“ — Brecht",
+    "„Alle Wahrheit durchläuft drei Phasen: belächelt, bekämpft, akzeptiert.“ — Schopenhauer",
+    "„Es ist gefährlich, recht zu haben, wenn die Regierung Unrecht hat.“ — Voltaire",
+    "„Freiheit ist immer Freiheit der Andersdenkenden.“ — Rosa Luxemburg",
+    "„Wenn Unrecht zu Recht wird, wird Widerstand zur Pflicht.“ — Brecht",
+    "„Das größte Übel ist nicht die Lüge, sondern die Gleichgültigkeit gegenüber der Wahrheit.“ — Unbekannt"
+  ];
+  let index = 0;
+  function zeigeZitat() {
+    const el = document.getElementById("zitatBox");
+    el.classList.remove("fade-in");
+    void el.offsetWidth; // trigger reflow
+    el.textContent = zitate[index];
+    el.classList.add("fade-in");
+    index = (index + 1) % zitate.length;
+  }
+  setInterval(zeigeZitat, 6000);
+  window.onload = zeigeZitat;
+</script>
+
+  
+<script>
+  const toggleDarkMode = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("igt-darkmode", document.body.classList.contains("dark") ? "1" : "0");
+  };
+  window.onload = () => {
+    if (localStorage.getItem("igt-darkmode") === "1") document.body.classList.add("dark");
+  };
+</script>
+
 </body>
 </html>

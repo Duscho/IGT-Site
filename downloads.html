@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Downloads – IGT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <div><strong>IGT</strong></div>
+    <div>
+      <a href="index.html">Start</a>
+      <a href="infos.html">Infos</a>
+      <a href="mitmachen.html">Mitmachen</a>
+      <a href="mitglieder.html">Mitglieder</a>
+      <a href="downloads.html">Downloads</a>
+      <span class="toggle-dark" onclick="toggleDarkMode()">🌓</span>
+    </div>
+  </nav>
+  <main>
+    <h1>Download-Bereich</h1>
+    <p>Hier findest du hilfreiche Materialien:</p>
+    <ul>
+      <li><a href="https://example.com/igt-konzept.pdf" target="_blank">📄 IGT Projektkonzept (PDF)</a></li>
+      <li><a href="https://example.com/flyer.pdf" target="_blank">📄 Aufklärungsflyer (PDF)</a></li>
+    </ul>
+  </main>
+  <script>
+    const toggleDarkMode = () => {{
+      document.body.classList.toggle("dark");
+      localStorage.setItem("igt-darkmode", document.body.classList.contains("dark") ? "1" : "0");
+    }};
+    window.onload = () => {{
+      if (localStorage.getItem("igt-darkmode") === "1") document.body.classList.add("dark");
+    }};
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>IGT Adminpanel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main style="padding:2rem;">
+    <h1>Adminpanel (Datenanzeige)</h1>
+    <div id="output">Lade Daten...</div>
+  </main>
+
+  <script type="module">
+    if (localStorage.getItem("igt-auth") !== "true") {{
+      window.location.href = "admin.html";
+    }}
+
+    import {{ initializeApp }} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import {{ getDatabase, ref, onChildAdded }} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    const firebaseConfig = {{
+      apiKey: "AIzaSyBF9HPU2GyeH4_GFdFono3Xzt8z3jx7aF4",
+      authDomain: "igt-projekt.firebaseapp.com",
+      databaseURL: "https://igt-projekt-default-rtdb.firebaseio.com",
+      projectId: "igt-projekt",
+      storageBucket: "igt-projekt.firebasestorage.app",
+      messagingSenderId: "306935324581",
+      appId: "1:306935324581:web:df219ae43cf6f506a5124c"
+    }};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const output = document.getElementById("output");
+
+    const paths = ["contact", "newsletter", "comments"];
+    paths.forEach(path => {{
+      const r = ref(db, path);
+      onChildAdded(r, snap => {{
+        const box = document.createElement("div");
+        box.style.border = "1px solid #ccc";
+        box.style.margin = "1rem 0";
+        box.style.padding = "0.5rem";
+        box.innerHTML = `<strong>${{path.toUpperCase()}}</strong><pre>${{JSON.stringify(snap.val(), null, 2)}}</pre>`;
+        output.prepend(box);
+      }});
+    }});
+  </script>
+</body>
+</html>

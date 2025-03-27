@@ -17,41 +17,18 @@
     </div>
   </nav>
   <main>
-    <h1>Live-Informationen</h1>
-    <h3>Wikipedia-Suche</h3>
-    <input type="text" id="wikiSearch" placeholder="z. B. Demokratie"><button onclick="searchWiki()">Suchen</button>
-    <p id="wikiInfo">Wikipedia-Inhalt wird geladen...</p>
-
-    <h3>News-Suche</h3>
-    <input type="text" id="newsSearch" placeholder="z. B. Fake News"><button onclick="searchNews()">Suchen</button>
-    <ul id="newsList">Nachrichten werden geladen...</ul>
+    <h1>Über das IGT-Projekt</h1>
+    <p>Das IGT-Projekt verfolgt das Ziel, eine unabhängige Plattform für politische Aufklärung zu schaffen.  
+       Unser Fokus liegt auf der Wahrheitsfindung, der Förderung von Freiheit und der Aufdeckung von Falschinformationen.  
+       Wir arbeiten daran, eine Gesellschaft zu stärken, die sich kritisch mit Fakten auseinandersetzt und den offenen Dialog führt.</p>
+    
+    <h2>Unser Ziel:</h2>
+    <p>Wir möchten ein transparentes Informationssystem bieten, das der Bevölkerung ermöglicht, sich auf verlässliche und überprüfte Quellen zu stützen.  
+       Das Projekt fördert eine vernetzte Gesellschaft, in der jeder Mensch Zugang zu Wahrheit hat und dabei in einer offenen und freiheitlichen Atmosphäre lebt.</p>
+    
+    <h2>Unsere Vision:</h2>
+    <p>Unsere Vision ist eine Welt, in der die Menschen nicht nur informiert sind, sondern die Fähigkeit besitzen, Information richtig zu hinterfragen.  
+       Indem wir unabhängige Fakten liefern, möchten wir die Verbreitung von Fake News und Manipulation verhindern.</p>
   </main>
-  <script>
-    function searchWiki() {{
-      const q = document.getElementById("wikiSearch").value.trim();
-      if (!q) return;
-      fetch(`https://de.wikipedia.org/api/rest_v1/page/summary/${{encodeURIComponent(q)}}`)
-        .then(r => r.json())
-        .then(d => document.getElementById("wikiInfo").textContent = d.extract || "Keine Info.")
-        .catch(() => document.getElementById("wikiInfo").textContent = "Fehler beim Laden.");
-    }}
-
-    function searchNews() {{
-      const q = document.getElementById("newsSearch").value.trim();
-      if (!q) return;
-      fetch(`https://newsapi.org/v2/everything?q=${{encodeURIComponent(q)}}&language=de&apiKey=4a54ca3c13094f3985fce7b1ee55c46b`)
-        .then(r => r.json())
-        .then(d => {{
-          const list = document.getElementById("newsList");
-          list.innerHTML = "";
-          d.articles.slice(0, 5).forEach(a => {{
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="${{a.url}}" target="_blank">${{a.title}}</a> <small>(${{a.source.name}})</small>`;
-            list.appendChild(li);
-          }});
-        }})
-        .catch(() => document.getElementById("newsList").textContent = "Fehler beim Laden.");
-    }}
-  </script>
 </body>
 </html>

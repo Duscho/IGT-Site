@@ -1,0 +1,43 @@
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+}
+nav {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+main {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+.fade-in {
+  animation: fadeIn 1.5s ease-in;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
